@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>DISPLAY</title>
+    <style>
+        .size{
+          font-size: 15px;
+          height: 20px;
+          font-family: Arial, Helvetica, sans-serif;
+          color: indigo;
+          border-radius: 20px;
+        }
+        .price{
+            font-size: 18px;
+        }
+        .left{
+            float:left;
+        }
+        .right{
+            float: right;
+        }
+        .container{
+            width: 274px;
+            height: 327px;
+            padding : 10px;
+            border-style: ridge;
+            border-color: black;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .sub-container{
+            color:indigo;
+            width:100%;
+            height:20px;
+            padding:3px;
+            border-radius: 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+        }
+    #options{
+        float:center;
+        margin-top: 3px;
+        font-size: 16px;
+        border-radius: 20px;
+        color:white;
+        background-color: rgb(196, 132, 36);
+    }
+    .pic {
+            padding: 11px;
+            width: 250px;
+            height: 250px;
+            position : relative;
+        }
+        #articles{
+            display:flex;
+            flex-wrap:wrap;
+            width: 78%;
+            justify-content: space-between;
+        }
+        #cart{
+            top:0;
+            position:fixed;
+            right : 0;
+            width: 20%;
+            height: 100%;
+            float: right;
+            z-index: 0;
+            background-color: rgb(211, 204, 190);
+        }
+        #top{
+            width:100%;
+        }
+        #list{
+            width:100%;
+            height:70%;
+        }
+        #bottom{
+            width:100%;
+            font-size: 20px;
+        }
+        #quantity{
+            width:10%;
+        }
+        #amount{
+            width:50%;
+        }
+        .box{
+            font-size: 17px;
+            border-radius: 5px;
+        }
+        #headings{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        #popup {
+            background-color: rgb(148, 108, 47);    
+            display: none;
+    position: fixed;
+    border: 3px solid #f1f1f1;
+    border-radius: 30px;
+    top:85px;
+    left:380px;
+    right:380px;
+    bottom:100px;
+        }
+#left
+{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  font-size: 22px;
+  margin-left: 3%;
+  float: left;
+  width: 40%;
+}
+#right
+{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  font-size: 22px;
+  float: right;
+  width: 50%;
+  margin-right: 3%;
+}
+.bottom
+{
+  margin-top: 10px;
+  margin-right: 15px;
+  float: right;
+}
+.popup_btn{
+    font-size: 20px;
+    color: white;
+    background-color: rgb(196, 132, 36);
+    margin-left: 30px;
+    margin-top: 13px;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 30px;
+}
+.popup-heading{
+    margin-top:10px;
+    font-size: 35px;
+    color:white;
+    width:70%;
+    border-style: double;
+}
+    </style>
+    <script>
+        var a,b,c;
+        var category = "NA";
+        function fetch_display_Articles(){
+            document.getElementById("articles").innerHTML=" ";
+            a=[" "];
+            b=[" "];
+            c=[" "];
+            var cookie_data= decodeURIComponent(document.cookie);
+            if(category=="NA"){
+                if(cookie_data.indexOf("N")==-1){
+                    window.location.href='categories.html';
+                }
+                category= cookie_data.substring(cookie_data.indexOf("N")+2,cookie_data.indexOf("N")+4);
+            }else{
+                category=document.getElementById("options").value;
+            }
+            const http=new XMLHttpRequest();
+            http.open("POST","p_fetch.php");
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.onload = function() {
+                let data=http.responseText;
+                var records = data.split("-");
+                for(let n=1;n<records.length;n++){
+                    var record=records[n];
+                    var values=record.split("_");
+                    a.push(values[0]);
+                    b.push(values[1]);
+                    c.push(values[2]);
+                }
+                disp(category); 
+            }
+            http.send("category="+category);        
+        }
+           function disp(category){
+            for(let index=1;index<a.length;index++){
+                html ="<div class='container'>";
+                html+="<div class='sub-container'>";
+                html+="<div class='left'>"+a[index]+"</div>";
+                html+="</div>";
+                html+="<img src='images/"+category+index+".jpg' alt='img' class='pic'>";
+                html+="<div class='sub-container'><div class='left'>";
+                html+="<select class='size' id='"+index+"'>";
+                if(category!="WS"){
+                html+="<option value='NA'>SIZE</option>";
+                html+="<option value='S'>S</option>";
+                html+="<option value='M'>M</option>";
+                html+="<option value='L'>L</option>";
+                html+="<option value='XL'>XL</option>";
+                }else{
+                html+="<option value=' '> </option>";
+                }
+                html+="</select></div>";
+                html+="<div class='right'><i class='fa fa-shopping-cart' onclick='add_to_cart("+index+")'></i></div>";
+                html+="<div class='right'>"+b[index]+" /-</div>";
+                html+="</div>";
+                html+="</div>";
+                html+="</div>";
+                document.getElementById("articles").innerHTML+=html;
+            }
+        }
+
+        function add_to_cart(index){
+                let value=document.getElementById(index).value;
+                if(!value || value=='NA'){
+                    alert("Select the size");
+                }else{
+                    let quantity=document.getElementById("quantity").value;
+                    let amount=document.getElementById("amount").value;
+                    if(value==" ") value='--';
+                    document.getElementById("list").innerHTML+=("&emsp;&ensp;"+a[index]+"&emsp;&emsp;&emsp;&ensp;"+value+"&emsp;&emsp;&emsp;&ensp;&ensp;"+b[index]+"<br>");
+                    document.getElementById("quantity").value=(Number(quantity)+1);
+                    document.getElementById("amount").value=(Number(amount)+Number(b[index]));
+                }
+            }
+            function open_popup(){
+                document.getElementById("articles").style.filter = "blur(4px)";
+                document.getElementById("cart").style.filter = "blur(4px)";
+                document.getElementById("popup").style.display = "block";
+                let quantity=document.getElementById("quantity").value;
+                let amount=document.getElementById("amount").value;
+                let tax=(Number(amount)*9)/100;
+                let delivery_charge=50;
+                let subtotal=Number(amount)+tax+delivery_charge;
+                document.getElementById("right").innerHTML=("<br>&emsp;"+quantity+"<br>&emsp;"+amount+"/-<br>&emsp;"+delivery_charge+"/-<br>&emsp;"+tax+"/-<br><hr>&emsp;"+subtotal+"/-");
+                //document.getElementById("right").innerHTML+=(subtotal);
+            }
+            function close_popup(){
+                document.getElementById("articles").style.filter = "blur(0px)";
+                document.getElementById("cart").style.filter = "blur(0px)";
+                document.getElementById("popup").style.display = "none";
+            }
+            </script>
+</head>
+<body onload="fetch_display_Articles()">
+        <div id="articles"></div>
+
+        <div id="cart">
+            <div id="top">
+            <select id="options" onchange="fetch_display_Articles()">
+                <option value="WK">KURTI</option>
+                <option value="WG">GOWN</option>
+                <option value="WL">LEHENGA</option>
+                <option value="WS">SAREE</option>
+                <option value="MS">SHERWANI</option>
+                <option value="MK">KURTA</option>
+                <option value="MP">PYJAMA</option>
+                <option value="MT">TUXEDO</option>
+            </select>
+            <b>QUANTITY : <input type="number" class="box" id="quantity" value="0" readonly>
+            <br>
+            <div id="headings">&emsp; CODE &emsp;&emsp; SIZE &emsp;&emsp; PRICE</div>
+        </b>
+        </div>
+            <hr>
+            <div id="list"></div>
+            <hr>
+            <div id="bottom">
+            <b>AMOUNT : <input type="number" class="box" id="amount" value="0" readonly></b>
+            <br>
+            <input type="button" value="Place Order" class="popup_btn" onclick="open_popup()">
+            </div> 
+        </div>
+        <div id="popup" align   ="center">
+            <div class="popup-heading">BILL</div>
+            <br><br>
+            <div id="left">
+            <br>
+            &emsp;Quantity<br>
+            &emsp;Total<br>
+            &emsp;Delivery Charge<br>
+            &emsp;Tax<br><hr>
+            &emsp;Subtotal 
+        </div>
+        <div id="right"></div>
+        <input type="button" value="Cancel" class="popup_btn" onclick="close_popup()">
+    </div>
+</body>
+</html>

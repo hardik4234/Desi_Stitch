@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desi Stitch</title>
+<style>
+    html{
+        scroll-behavior: smooth;
+    }
+    body{
+        background-image: url("selection/homepage_bg.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    #navbar
+    {
+    overflow: hidden;
+    position:fixed;
+    z-index: 1;
+    width:100%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+a {
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-decoration: none;
+    padding: 2px 2px 2px 2px;
+}
+
+a:hover{
+    color: black;
+    border-radius: 10px;
+    background-color: white;
+}
+
+    #heading
+    {
+        padding-top: 100px;
+        font-size: 90px;
+        color : rgb(250, 250, 249);
+        font-weight: bold;
+        margin-top:65px;
+        margin-left: 17%;
+        margin-right: 17%;
+        text-align: center;
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 2px;
+    }
+    #detail_box
+    {
+        font-size: clamp(1.6vw,2.3vh,2.6vh);
+        margin-left: 20%;
+        margin-right: 20%;
+        font-family:'Courier New', Courier, monospace;
+        font-weight: bold;
+        text-align: center;
+        font-weight:bold;
+        color: black;
+        padding-top: 20px;
+    }
+    .button{
+        padding: 5px;
+        position: relative;
+        margin-left: 20px;
+        margin-right: 20px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 30px;
+    }
+    #about{
+        padding-top: 350px;
+        padding-bottom: 200px;
+        padding-left: 25%;
+        padding-right: 25%;
+        font-size: 20px;
+        color: white;
+        text-align: center;
+    }
+</style>
+<script>
+    function modifier(){
+          var cookie_data= decodeURIComponent(document.cookie);
+          if(cookie_data !=""){
+           var status = cookie_data.substring(cookie_data.indexOf("U")+3,cookie_data.indexOf("U")+11);
+           if(status=="VERIFIED"){
+            document.getElementById('navbar').innerHTML='<a onclick="logout()" class="right">Logout</a>';
+            document.getElementById('heading').innerHTML='DESI STITCH<br><input type="button" class="button" value="MEN" onclick="selection(`M`)"><input type="button" class="button" value="WOMEN" onclick="selection(`W`)">';
+           }
+          }
+     }
+     function selection(category){
+        document.cookie = 'CATEGORY='+category;
+        window.location.href='categories.html';
+     }
+
+     function redirect(where){
+        if(where=="UP") window.location.href="index_s.html";
+        if(where=="IN") window.location.href="index_l.html";
+     }
+
+     function logout(){
+      document.cookie = 'STATUS=UN-KNOWN';
+      alert("You Have been Logged Out");
+      window.location.href="homepage.html";
+     }
+</script>
+</head>
+<body onload="modifier()">
+<ul id="navbar">
+    <a href="#about" class="right">ABOUT US</a>
+  </ul>
+<div id="heading">DESI STITCH<br>
+    <input type="button" class="button" onclick="redirect('UP')" value="SIGN UP"><input type="button" class="button" onclick="redirect('IN')" value="SIGN IN">
+</div> 
+<div id="about">ABOUT US<hr>
+    To keep alive the richness of the Indian ensemble with a tough of modern trends, we bring to you Desi Stitch,
+    one stop destination for all kinds of ethnic wear.We strive to create aesthetic, elegant and top-class traditional
+    wear for both men and women.
+</div>
+</body>
+</html>

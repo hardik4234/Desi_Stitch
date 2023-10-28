@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+    background-color: rgb(211, 204, 190);
+    overflow: hidden;
+}
+#form{
+    background-color: white;
+    width : 20%;
+    border-radius: 6px;
+    margin :100px auto;
+    padding : 50px;
+    box-shadow: 10px 10px 5px rgb(61, 82, 11);
+}
+h1{
+    text-align: center;
+}
+input{
+    width: 90%;
+    border-radius: 4px;
+    border : 3px solid #f6efef;
+    padding : 5px;
+}
+#btn{
+    width:100%;
+    color: white;
+    background-color: rgb(183, 119, 67);
+    padding : 10px;
+    font-size: medium;
+    border-radius: 10px;
+}
+    </style>
+    <script>
+    function isvalid(){
+        console.log("function called");
+        var user = document.form.user.value;
+        var pass = document.form.pass.value;
+        if(user.length=="" && pass.length==""){
+            alert("Username and Password is Empty");
+            return false 
+        }else {
+            if(user.length=="" ){
+                alert("Username is Empty");
+                return false;
+        }
+        if(pass.length=="" ){
+            alert("Password is Empty");
+            return false;
+        }
+    }
+}
+</script>
+</head>
+<body>
+    <div id="form">
+        <h1>Login Page</h1>
+        <form name="form" action = "p_login.php" method="POST"  onsubmit = "return isvalid()">
+            <label>Username</label>
+            <input type="text" id="user" name="user"><br></br>
+            <label>Password</label>
+            <input type="password" id="pass" name="pass"><br></br>
+            <input type="submit" id="btn" value="Login" name="submit">
+        </form>
+</body>
+</html>
